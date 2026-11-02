@@ -4,7 +4,7 @@
   "author": "Community hobbyist prototype",
   "description": "Uploads FPP media files and reports active playback to an independent backend. Experimental.",
   "homeURL": "https://github.com/FalconChristmas/fpp",
-  "srcURL": "https://github.com/REPLACE_WITH_YOUR_ACCOUNT/fpp-audio-preprocessed.git",
+  "srcURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed.git",
   "versions": [
     {
       "minFPPVersion": 7.0,
