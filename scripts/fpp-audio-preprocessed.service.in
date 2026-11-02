@@ -1,0 +1,13 @@
+[Unit]
+Description=FPP preprocessed media sync connector
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+User=fpp
+ExecStart=/usr/bin/python3 __PLUGIN_DIR__/agent/agent.py
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+[Install]
+WantedBy=multi-user.target
