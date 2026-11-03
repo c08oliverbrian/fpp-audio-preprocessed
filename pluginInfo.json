@@ -5,12 +5,14 @@
   "description": "Uploads FPP media files and reports active playback to an independent backend. Experimental.",
   "homeURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed",
   "srcURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed.git",
+  "allowUpdates": 1,
   "versions": [
     {
       "minFPPVersion": 7.0,
-      "maxFPPVersion": 0,
+      "maxFPPVersion": 10.99,
       "branch": "main",
-      "sha": "94c9e43a8ecc65f785b20b480e9244f01bdb1f91"
+      "sha": ""
+      "allowUpdates": 1
     }
   ]
 }
