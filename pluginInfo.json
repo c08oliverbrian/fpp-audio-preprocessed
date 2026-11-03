@@ -5,6 +5,8 @@
   "description": "Uploads FPP media files and reports active playback to an independent backend. Experimental.",
   "homeURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed",
   "srcURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed.git",
+  "bugURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed/issues",
+	"iconURL": "https://raw.githubusercontent.com/computergeek1507/fpp-plugin-tplink/main/icon.png",
   "allowUpdates": 1,
   "versions": [
     {
