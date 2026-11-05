@@ -2,19 +2,40 @@
   "repoName": "fpp-audio-preprocessed",
   "name": "FPP Preprocessed Audio Sync (Prototype)",
   "author": "Community hobbyist prototype",
-  "description": "Uploads FPP media files and reports active playback to an independent backend. Experimental.",
+  "description": "Uploads FPP music files and playback timing to a separately hosted listener backend. Experimental.",
   "homeURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed",
   "srcURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed.git",
   "bugURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed/issues",
-	"iconURL": "https://raw.githubusercontent.com/computergeek1507/fpp-plugin-tplink/main/icon.png",
   "allowUpdates": 1,
+  "privacy": {
+    "summary": "Sends show music and playback timing to your chosen HTTPS server so visitors can listen on their phones.",
+    "sends": [
+      {
+        "to": "the backend HTTPS server you configure",
+        "what": "music files, show playback position, and player device ID",
+        "why": "to stream show audio to visitors",
+        "alwaysOn": false
+      }
+    ],
+    "collects": [],
+    "sensors": [],
+    "remoteAccess": "none",
+    "systemChanges": [
+      {
+        "kind": "service",
+        "what": "Installs a systemd service that monitors FPP playback and sends updates."
+      }
+    ],
+    "closedCode": false,
+    "other": "The backend is separately deployed and serves audio to phones; review music streaming rights and backend access controls."
+  },
   "versions": [
     {
-     "minFPPVersion": "10.0",
-     "maxFPPVersion": "0",
-     "branch": "main",
-     "sha": "",
-     "allowUpdates": 1
+      "minFPPVersion": "10.0",
+      "maxFPPVersion": "0",
+      "branch": "main",
+      "sha": "",
+      "allowUpdates": 1
     }
   ]
 }
