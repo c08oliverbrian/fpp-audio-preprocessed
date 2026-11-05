@@ -101,8 +101,6 @@ The streaming server stores and delivers copies of the audio files. It does **no
 
 The player includes a small, **optional** panel for donations to the **software developer**, not the individual light-display owner. Listening is always free. The Stripe Buy Button loads only after a visitor opens the support panel.
 
-To disable the panel, set `FPP_DEVELOPER_SUPPORT_ENABLED=0` in cPanel and restart the Python app. To change the Stripe recipient, update the `FPP_DEVELOPER_SUPPORT_URL`, `FPP_DEVELOPER_SUPPORT_BUTTON_ID`, and `FPP_DEVELOPER_SUPPORT_PUBLISHABLE_KEY` values together. Never put a Stripe *secret* API key in the page or the repository.
-
 ## 8. Troubleshooting
 
 | Symptom | Likely explanation / first check |
