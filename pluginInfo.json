@@ -1,7 +1,7 @@
 {
   "repoName": "fpp-audio-preprocessed",
-  "name": "LightShow Radio \u2014 Self-Hosted Audio",
-  "author": "LightShow Radio contributors",
+  "name": "LightShow Web Stream \u2014 Self-Hosted Audio",
+  "author": "LightShow Web Stream contributors",
   "description": "Free, self-hosted music streaming synchronized approximately to FPP playback; optional developer contributions.",
   "homeURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed",
   "srcURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed.git",

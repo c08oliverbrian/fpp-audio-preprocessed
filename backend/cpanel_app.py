@@ -1,4 +1,4 @@
-"""LightShow Radio cPanel/Passenger backend (v1.0.0-rc1)."""
+"""LightShow Web Stream cPanel/Passenger backend (v1.0.0-rc2)."""
 import os, re, json, time, uuid, hmac, hashlib, sqlite3, io, secrets
 from pathlib import Path
 from urllib.parse import unquote
@@ -58,7 +58,7 @@ def state_for(device):
     media,status,pos,received,display,session=row
     age=max(0,time.time()-received)
     active=age<STALE and playing(status) and bool(media)
-    return {'device':device,'display_name':display or device,'media':media,'state':status if age<STALE else 'offline',
+    return {'device':device,'display_name':display or 'Your light show, live.','media':media,'state':status if age<STALE else 'offline',
             'position':round(max(0,pos+(age if active else 0)),3),'session_id':session,'active':active,
             'media_ready':bool(media and (ROOT/device/media).is_file()),'received_at':received}
 
@@ -70,7 +70,7 @@ def headers(r):
     return r
 
 @app.get('/health')
-def health():return jsonify(ok=True,version='1.0.0-rc1-cpanel')
+def health():return jsonify(ok=True,version='1.0.0-rc2-cpanel')
 
 @app.get('/api/player-config')
 def player_config():
@@ -103,7 +103,7 @@ def set_state(device):
     except (ValueError,TypeError):abort(400)
     if not 0<=pos<1e9:abort(400)
     status=str(data.get('state','unknown'))[:40]
-    display=str(data.get('display_name') or device)[:100]
+    display=str(data.get('display_name') or 'Your light show, live.')[:100]
     with db() as con:
         old=con.execute('SELECT media,state,position,session FROM state WHERE device=?',(device,)).fetchone()
         restart=not old or old[0]!=media or (playing(status) and not playing(old[1])) or (playing(status) and pos+2<old[2])

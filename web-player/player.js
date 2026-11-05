@@ -1,5 +1,5 @@
 'use strict';
-// LightShow Radio v1.0.0-rc1 — browser-side approximate synchronization.
+// LightShow Web Stream v1.0.0-rc2 — browser-side approximate synchronization.
 (() => {
   const device = decodeURIComponent(location.pathname.split('/')[2] || '');
   const $ = id => document.getElementById(id);
@@ -13,6 +13,13 @@
   let correctionAt = 0;
   let pendingAutoplay = false;
   const displaySong = name => String(name || '').replace(/\.[A-Za-z0-9]{2,5}$/, '').replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim().replace(/\b[a-z]/g, c => c.toUpperCase());
+  // The device ID is an internal routing identifier, never a visitor-facing show title.
+  // Existing installations may have saved display_name='fpp' from the older agent.
+  const publicShowName = state => {
+    const title = String(state?.display_name || '').trim();
+    const ids = [state?.device, device].filter(Boolean).map(value => String(value).trim().toLowerCase());
+    return title && !ids.includes(title.toLowerCase()) ? title : 'Your light show, live.';
+  };
   const formatTime = secs => Number.isFinite(secs) ? `${Math.floor(secs / 60)}:${String(Math.floor(secs % 60)).padStart(2, '0')}` : '–:––';
 
   function hint(message) { $('hint').textContent = message; }
@@ -68,7 +75,7 @@
       if (!response.ok) throw new Error('Show unavailable');
       const state = await response.json();
       current = state;
-      $('show').textContent = state.display_name || 'Your light show, live.';
+      $('show').textContent = publicShowName(state);
       $('song').textContent = state.media ? displaySong(state.media) : 'Waiting for music…';
       const live = !!state.active && !!state.media_ready;
       uiStatus(live ? 'ON AIR' : state.active ? 'PREPARING AUDIO' : 'OFF AIR', live);

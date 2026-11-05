@@ -1,5 +1,5 @@
 <?php
-// LightShow Radio configuration — tokens are never rendered back into the page.
+// LightShow Web Stream configuration — tokens are never rendered back into the page.
 $path = '/home/fpp/media/config/fpp-audio-preprocessed.json';
 $cfg = is_file($path) ? (json_decode((string)file_get_contents($path), true) ?: []) : [];
 $message = '';
@@ -61,6 +61,9 @@ $device = (string)($cfg['device_id'] ?? 'fpp');
   .lsr-settings{max-width:760px;margin:18px 0 36px;font-size:15px;line-height:1.5}
   .lsr-banner{background:#181c39;color:#f6f5ff;padding:22px 25px;border-radius:14px;margin-bottom:20px}
   .lsr-banner h2{color:white;margin:0 0 5px}.lsr-banner p{margin:0;color:#d3d4eb}
+  .lsr-banner-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .lsr-manual-link{display:inline-flex;align-items:center;justify-content:center;gap:6px;color:#fff!important;border:1px solid #b2b5f1;background:#ffffff20;border-radius:9px;padding:10px 14px;font-weight:700;text-decoration:none!important}
+  .lsr-manual-link:hover,.lsr-manual-link:focus-visible{background:#ffffff32;text-decoration:underline!important}
   .lsr-panel{padding:21px 24px;border:1px solid #d8dce9;border-radius:13px;background:var(--bs-body-bg,#fff);margin-bottom:16px}
   .lsr-settings .lsr-field{display:flex;flex-direction:column;gap:5px;margin:13px 0}.lsr-field input:not([type=checkbox]){width:100%;max-width:640px;padding:9px;border:1px solid #a3acc3;border-radius:6px}
   .lsr-settings .lsr-note{font-size:13px;color:var(--bs-secondary-color,#6e7589);margin:7px 0}
@@ -68,7 +71,10 @@ $device = (string)($cfg['device_id'] ?? 'fpp');
   .lsr-settings .lsr-flash.bad{background:#ffe9e9;color:#7b1d1d}.lsr-settings .lsr-save{background:#5f54d9;color:white;border:0;border-radius:7px;padding:12px 25px;font-weight:750;cursor:pointer}
 </style>
 <div class="lsr-settings">
-  <div class="lsr-banner"><h2>LightShow Radio</h2><p>Self-hosted streaming audio for visitors to your FPP light show</p></div>
+  <div class="lsr-banner"><div class="lsr-banner-row">
+    <div><h2>LightShow Web Stream</h2><p>Self-hosted streaming audio for visitors to your FPP light show</p></div>
+    <a class="lsr-manual-link" href="https://github.com/c08oliverbrian/fpp-audio-preprocessed/blob/main/docs/USER-MANUAL.md" target="_blank" rel="noopener noreferrer" aria-label="Open LightShow Web Stream instructions manual in a new tab">Instructions manual ↗</a>
+  </div></div>
   <?php if ($message): ?><div role="status" class="lsr-flash<?= $error ? ' bad' : '' ?>"><?=lightshowEsc($message)?></div><?php endif; ?>
   <form method="post">
     <div class="lsr-panel">

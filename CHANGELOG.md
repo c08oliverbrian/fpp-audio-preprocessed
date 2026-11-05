@@ -1,6 +1,14 @@
+## 1.0.0-rc2 — LightShow Web Stream (user-interface refinement)
+
+- Updated the visible product name to **LightShow Web Stream**; plugin and service identifiers remain unchanged to preserve upgrades and pairing.
+- Added an **Instructions manual** link prominently in the FPP plugin settings page, pointing to the new comprehensive `docs/USER-MANUAL.md` in GitHub.
+- Removed the large decorative square artwork and the redundant hero subtitle from the mobile player.
+- Prevented the internal Device ID (e.g. `fpp`) from appearing as the public show title, including with previously saved configurations.
+- Retained existing streaming API, Stripe donation, cPanel storage and auth behavior.
+
 # Changelog
 
-## v1.0.0-rc1 — November 2026
+## v1.0.0-rc2 — November 2026
 
 - New responsive dark-themed listener player with accessible listening controls, live status, playback progress, and volume.
 - Optional **Support the software developer** panel; clearly distinguishes contributions from light-show donations.

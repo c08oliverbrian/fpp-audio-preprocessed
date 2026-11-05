@@ -1,6 +1,6 @@
-# LightShow Radio — Self-Hosted Audio for FPP
+# LightShow Web Stream — Self-Hosted Audio for FPP
 
-**Release candidate v1.0.0-rc1** — free, self-hosted MP3 audio for people watching a Falcon Player light show. Visitors scan a QR code, open the listener page on their phone, and tap **Listen live**. The player seeks to the position reported by FPP and makes periodic drift corrections. This is **approximate synchronization**, not guaranteed sample-accurate synchronization.
+**Release candidate v1.0.0-rc2** — free, self-hosted MP3 audio for people watching a Falcon Player light show. Visitors scan a QR code, open the listener page on their phone, and tap **Listen live**. The player seeks to the position reported by FPP and makes periodic drift corrections. This is **approximate synchronization**, not guaranteed sample-accurate synchronization.
 
 This repository contains **two independently deployed components**:
 
@@ -9,13 +9,17 @@ This repository contains **two independently deployed components**:
 
 **Listening is always free.** A small, optional support panel allows visitors to contribute directly to the **software developer**, *not* the display owner. Stripe is loaded only after the visitor opens this panel. A show operator can disable it with `FPP_DEVELOPER_SUPPORT_ENABLED=0` on the server.
 
+## Instructions manual
+
+**[Open the complete LightShow Web Stream user manual](docs/USER-MANUAL.md)** — setup, pairing, QR signs, playback, donation options, troubleshooting, and upgrades. The same manual is linked directly from the plugin configuration page in FPP.
+
 ## Quick deployment
 
 1. **Back up** the FPP plugin's configuration and your cPanel application before upgrading. Do not replace `.env` files, cPanel variables, or `private-media/`.
 2. Upload the **contents** of `backend/` to the existing cPanel Python app root (e.g. `~/fpp-audio-backend/`). Upload the **contents** of `web-player/` to `~/web-player/` (sibling of `fpp-audio-backend`). See [cPanel deployment and upgrade guide](docs/CPANEL-DEPLOY.md).
 3. Restart the Python application. Verify `/health` and `/api/player-config`.
 4. Commit the **repository root** files to your GitHub `main` branch. In FPP 10.3, go to **Content Setup → Plugin Manager → Installed → Check for Updates / Update**. Existing pairing settings are retained.
-5. In FPP, open **LightShow Radio**, confirm your backend HTTPS URL and saved device token. The visitor page is `https://YOUR-HOST/listen/fpp/` (substitute your Device ID).
+5. In FPP, open **LightShow Web Stream**, confirm your backend HTTPS URL and saved device token. The visitor page is `https://YOUR-HOST/listen/fpp/` (substitute your Device ID).
 6. Test music upload, listener playback, QR, and the optional donation panel with a phone on cellular data. See [test checklist](docs/RELEASE-TESTS.md).
 
 ### Folder layout

@@ -57,7 +57,7 @@ For the user-supplied donation setup, the QR image points to the default `FPP_DE
 
 ## Verify after the restart
 
-1. `https://YOUR-HOST/health` returns `{"ok":true,"version":"1.0.0-rc1-cpanel"}`.
+1. `https://YOUR-HOST/health` returns `{"ok":true,"version":"1.0.0-rc2-cpanel"}`.
 2. `https://YOUR-HOST/api/player-config` returns developer-support options without any FPP device authentication secrets.
 3. `https://YOUR-HOST/api/shows/fpp` returns active playback metadata when FPP is playing; expect `media_ready:true` once the MP3 has uploaded.
 4. `https://YOUR-HOST/listen/fpp/` loads the new player (including CSS/JS), and a phone on cellular data plays music when **Listen live** is tapped.

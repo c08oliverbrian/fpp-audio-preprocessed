@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""LightShow Radio best-effort FPP media synchronization agent.
+"""LightShow Web Stream best-effort FPP media synchronization agent.
 
 Never controls FPP playback; all network failures are isolated from the show.
 """
@@ -68,7 +68,7 @@ def main():
     setup_log()
     signal.signal(signal.SIGTERM, lambda *_: globals().update(STOP=True))
     signal.signal(signal.SIGINT, lambda *_: globals().update(STOP=True))
-    logging.info('LightShow Radio FPP agent starting')
+    logging.info('LightShow Web Stream FPP agent starting')
     previous = None
     uploaded = set()
     last_heartbeat = 0.0
@@ -115,7 +115,7 @@ def main():
             if key != previous or time.monotonic() - last_heartbeat >= 1.0:
                 data = {
                     'media': song, 'state': state, 'position': elapsed,
-                    'display_name': cfg.get('display_name') or device,
+                    'display_name': cfg.get('display_name') or 'Your light show, live.',
                 }
                 response = request_json(
                     base + '/api/devices/' + urllib.parse.quote(device, safe='') + '/state',
@@ -135,7 +135,7 @@ def main():
         except Exception as exc:
             logging.warning('Synchronization error: %s: %s', type(exc).__name__, exc)
         time.sleep(.5)
-    logging.info('LightShow Radio agent stopped')
+    logging.info('LightShow Web Stream agent stopped')
 
 
 if __name__ == '__main__':

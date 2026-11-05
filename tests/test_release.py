@@ -39,6 +39,29 @@ class ReleaseTests(unittest.TestCase):
             self.assertTrue((ROOT / 'web-player' / name).is_file())
         self.assertIn('software developer', html.lower())
 
+    def test_public_show_title_masks_device_id(self):
+        js = (ROOT / 'web-player/player.js').read_text()
+        self.assertIn("const publicShowName = state =>", js)
+        self.assertIn("ids.includes(title.toLowerCase())", js)
+        self.assertIn("$('show').textContent = publicShowName(state);", js)
+
+    def test_simplified_player(self):
+        html = (ROOT / 'web-player/index.html').read_text()
+        self.assertNotIn('Enjoy the music while you watch the display.', html)
+        self.assertNotIn('class="artwork"', html)
+        css = (ROOT / 'web-player/styles.css').read_text()
+        self.assertNotIn('.artwork{', css)
+        self.assertIn('LIGHTSHOW<span class="wordmark-accent">WEB STREAM', html)
+
+    def test_manual_and_renaming(self):
+        manual = ROOT / 'docs/USER-MANUAL.md'
+        self.assertTrue(manual.is_file())
+        php = (ROOT / 'content.php').read_text()
+        self.assertIn('https://github.com/c08oliverbrian/fpp-audio-preprocessed/blob/main/docs/USER-MANUAL.md', php)
+        self.assertIn('Instructions manual', php)
+        for file in [ROOT / 'README.md', ROOT / 'pluginInfo.json', ROOT / 'content_menu.inc', ROOT / 'web-player/index.html']:
+            self.assertNotIn('LightShow Radio', file.read_text())
+
     def test_token_not_disclosed_in_public_player_config(self):
         src = (ROOT / 'backend/cpanel_app.py').read_text()
         block = src.split('def player_config():', 1)[1].split('@app.', 1)[0]
