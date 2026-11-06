@@ -1,6 +1,6 @@
 <?php
 // LightShow Web Stream configuration — tokens are never rendered back into the page.
-$path = '/home/fpp/media/config/fpp-audio-preprocessed.json';
+$path = '/home/fpp/media/plugindata/fpp-audio-preprocessed/settings.json';
 $cfg = is_file($path) ? (json_decode((string)file_get_contents($path), true) ?: []) : [];
 $message = '';
 $error = false;
@@ -98,7 +98,7 @@ $device = (string)($cfg['device_id'] ?? 'fpp');
       <p><strong>Playback status:</strong> <a target="_blank" rel="noopener noreferrer" href="<?=lightshowEsc($base.'/api/shows/'.rawurlencode($device))?>">Open backend status</a></p>
       <p><strong>QR image:</strong> <a target="_blank" rel="noopener noreferrer" href="<?=lightshowEsc($base.'/api/shows/'.rawurlencode($device).'/qr')?>">Open visitor QR code</a></p>
     <?php else: ?><p>Save your backend URL to show these links.</p><?php endif; ?>
-    <p class="lsr-note">Agent log: <code>/home/fpp/media/logs/fpp-audio-preprocessed.log</code></p>
+    <p class="lsr-note">Agent log: <code>/home/fpp/media/logs/plugin-fpp-audio-preprocessed.log</code></p>
     <p class="lsr-note">The optional developer-support panel is configured on your cPanel backend; it never restricts listening.</p>
   </div>
 </div>

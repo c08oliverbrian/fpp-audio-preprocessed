@@ -1,3 +1,12 @@
+## v1.0.0-rc3 — FPP listing compliance
+
+- Executable install/uninstall hooks (both root and scripts paths), with Git mode instructions.
+- Removed sudo from systemd installer and uninstall hooks.
+- FPP-compliant plugin log path and private plugindata settings with safe migration.
+- Declared Stripe payment destinations and the system service in privacy metadata.
+- External Stripe payment page instead of CSP-blocked embedded script.
+- Added gitHistory release notes and shortened privacy summary.
+
 ## 1.0.0-rc2 — LightShow Web Stream (user-interface refinement)
 
 - Updated the visible product name to **LightShow Web Stream**; plugin and service identifiers remain unchanged to preserve upgrades and pairing.

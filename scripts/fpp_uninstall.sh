@@ -1,8 +1,12 @@
 #!/bin/bash
 set -euo pipefail
-if command -v systemctl >/dev/null; then
- sudo systemctl disable --now fpp-audio-preprocessed.service || true
- sudo rm -f /etc/systemd/system/fpp-audio-preprocessed.service
- sudo systemctl daemon-reload
+SERVICE=/etc/systemd/system/fpp-audio-preprocessed.service
+if command -v systemctl >/dev/null 2>&1 && [ -d /run/systemd/system ]; then
+  systemctl disable --now fpp-audio-preprocessed.service || true
 fi
-# Deliberately preserve settings and logs.
+rm -f "$SERVICE"
+if command -v systemctl >/dev/null 2>&1 && [ -d /run/systemd/system ]; then
+  systemctl daemon-reload
+fi
+# Leave /home/fpp/media/plugindata/fpp-audio-preprocessed/settings.json
+# (which contains pairing credentials) and logs for manual removal.

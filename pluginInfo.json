@@ -1,6 +1,6 @@
 {
   "repoName": "fpp-audio-preprocessed",
-  "name": "LightShow Web Stream \u2014 Self-Hosted Audio",
+  "name": "LightShow Web Stream — Self-Hosted Audio",
   "author": "LightShow Web Stream contributors",
   "description": "Free, self-hosted music streaming synchronized approximately to FPP playback; optional developer contributions.",
   "homeURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed",
@@ -8,12 +8,24 @@
   "bugURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed/issues",
   "allowUpdates": 1,
   "privacy": {
-    "summary": "Uploads show music, the media filename, timing and device ID to the HTTPS server configured by the show operator; the listener page optionally offers a Stripe-hosted contribution to the software developer.",
+    "summary": "Streams FPP show audio to your HTTPS server. The optional listener support link opens Stripe. Installs a background FPP synchronization service.",
     "sends": [
       {
         "to": "the backend HTTPS server you configure",
-        "what": "music files, show playback position, and player device ID",
-        "why": "to stream show audio to visitors",
+        "what": "music files, current song, timing and device ID",
+        "why": "to let visitors hear the show on their phones",
+        "alwaysOn": false
+      },
+      {
+        "to": "donate.stripe.com",
+        "what": "visitor browser IP address and payment page request",
+        "why": "to open an optional developer contribution page",
+        "alwaysOn": false
+      },
+      {
+        "to": "buy.stripe.com",
+        "what": "visitor browser IP address and payment page request",
+        "why": "to support an optional configured Stripe payment URL",
         "alwaysOn": false
       }
     ],
@@ -23,11 +35,11 @@
     "systemChanges": [
       {
         "kind": "service",
-        "what": "Installs a systemd service under the fpp account to poll FPP status and upload audio."
+        "what": "Installs and enables systemd service fpp-audio-preprocessed for FPP playback synchronization"
       }
     ],
     "closedCode": false,
-    "other": "Audio is publicly accessible to anyone with the visitor URL. Optional listener donations go to the software developer, not the display owner. Stripe is contacted only when a listener opens the support panel. The show operator may disable donations. Only stream media for which you have rights."
+    "other": "Optional contributions support the software developer, not the show owner. Payment links open on Stripe; no payment is needed to listen. Stream only music you are licensed to use."
   },
   "versions": [
     {
@@ -38,5 +50,7 @@
       "allowUpdates": 1
     }
   ],
-  "iconURL": "https://raw.githubusercontent.com/c08oliverbrian/fpp-audio-preprocessed/main/icon.png"
+  "iconURL": "https://raw.githubusercontent.com/c08oliverbrian/fpp-audio-preprocessed/main/icon.png",
+  "releaseNotesStyle": "gitHistory",
+  "documentation": "https://github.com/c08oliverbrian/fpp-audio-preprocessed/blob/main/docs/USER-MANUAL.md"
 }

@@ -143,7 +143,6 @@
   // Developer contributions are completely optional and never block playback.
   // Stripe is contacted only after the visitor explicitly opens the support panel.
   let supportConfig = null;
-  let stripeLoaded = false;
   const defaultLink = 'https://donate.stripe.com/6oUbJ2dYq8ZY7QB8at3sI00';
   async function setupSupport() {
     try {
@@ -163,18 +162,7 @@
     const opened = $('supportToggle').getAttribute('aria-expanded') === 'true';
     $('supportToggle').setAttribute('aria-expanded', String(!opened));
     $('supportBody').hidden = opened;
-    if (!opened && !stripeLoaded && supportConfig?.buy_button_id && supportConfig?.publishable_key) {
-      stripeLoaded = true;
-      const element = document.createElement('stripe-buy-button');
-      element.setAttribute('buy-button-id', supportConfig.buy_button_id);
-      element.setAttribute('publishable-key', supportConfig.publishable_key);
-      $('stripeSlot').appendChild(element);
-      const script = document.createElement('script');
-      script.src = 'https://js.stripe.com/v3/buy-button.js';
-      script.async = true;
-      script.onerror = () => { $('stripeSlot').replaceChildren(); }; // Direct Stripe link remains available.
-      document.head.appendChild(script);
-    }
+
   });
   poll();
   void setupSupport();

@@ -82,3 +82,28 @@ class ReleaseTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class CatalogReviewTests(unittest.TestCase):
+    def test_hooks_are_executable(self):
+        for path in ('fpp_install.sh','fpp_uninstall.sh','scripts/fpp_install.sh','scripts/fpp_uninstall.sh'):
+            self.assertTrue((ROOT/path).stat().st_mode & 0o111, path)
+
+    def test_sudo_not_in_install_hooks(self):
+        for path in ('fpp_install.sh','fpp_uninstall.sh','scripts/fpp_install.sh','scripts/fpp_uninstall.sh'):
+            self.assertNotIn('sudo ', (ROOT/path).read_text())
+
+    def test_private_config_and_log(self):
+        self.assertIn('/home/fpp/media/plugindata/fpp-audio-preprocessed/settings.json', (ROOT/'agent/agent.py').read_text())
+        self.assertIn('/home/fpp/media/plugindata/fpp-audio-preprocessed/settings.json', (ROOT/'content.php').read_text())
+        self.assertIn('/home/fpp/media/logs/plugin-fpp-audio-preprocessed.log', (ROOT/'agent/agent.py').read_text())
+        self.assertIn('systemctl disable --now fpp-audio-preprocessed.service', (ROOT/'scripts/fpp_uninstall.sh').read_text())
+
+    def test_privacy_and_csp(self):
+        m=json.loads((ROOT/'pluginInfo.json').read_text())
+        self.assertEqual(m['releaseNotesStyle'],'gitHistory')
+        self.assertLessEqual(len(m['privacy']['summary']),200)
+        recipients={x['to'] for x in m['privacy']['sends']}
+        self.assertIn('donate.stripe.com',recipients)
+        self.assertIn('buy.stripe.com',recipients)
+        self.assertTrue(any(s['kind']=='service' and 'fpp-audio-preprocessed' in s['what'] for s in m['privacy']['systemChanges']))
+        self.assertNotIn('js.stripe.com', (ROOT/'web-player/player.js').read_text())

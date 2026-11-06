@@ -68,7 +68,7 @@ To remove the support panel from your own deployment, set `FPP_DEVELOPER_SUPPORT
 ```bash
 sudo systemctl status fpp-audio-preprocessed.service --no-pager
 sudo journalctl -u fpp-audio-preprocessed.service -n 40 --no-pager
-tail -n 40 /home/fpp/media/logs/fpp-audio-preprocessed.log
+tail -n 40 /home/fpp/media/logs/plugin-fpp-audio-preprocessed.log
 ```
 
 Test endpoints:
@@ -88,3 +88,20 @@ This candidate is **not yet certified** for FPP's official plugin catalog. FPP r
 ## License
 
 MIT, see `LICENSE` (subject to rights in any third-party files you add). This project is independent of FPP and Stripe, and is not endorsed by either.
+
+## FPP catalog compliance and existing-install migration (rc3)
+
+Update through FPP Plugin Manager after uploading the new repository files. The
+installer copies legacy credentials from `/home/fpp/media/config/fpp-audio-preprocessed.json`
+to `/home/fpp/media/plugindata/fpp-audio-preprocessed/settings.json` on the
+first update, without changing tokens. It intentionally leaves the old file
+unchanged for rollback; after verifying pairing and uploads, securely remove
+that old legacy file to avoid its inclusion in FPP support archives.
+
+The agent writes to `/home/fpp/media/logs/plugin-fpp-audio-preprocessed.log`.
+The donation panel uses a link to an external Stripe-hosted checkout rather than
+loading remote scripts into the visitor player. This is compatible with the FPP
+plugin review's CSP rules and does not affect playback or pairing.
+
+For GitHub publishing **executable bits must be committed with Git**, not merely
+set locally. See `docs/FPP-CATALOG-FIXES.md`.

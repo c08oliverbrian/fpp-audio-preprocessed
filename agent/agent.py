@@ -14,8 +14,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-CFG = pathlib.Path('/home/fpp/media/config/fpp-audio-preprocessed.json')
-LOG = pathlib.Path('/home/fpp/media/logs/fpp-audio-preprocessed.log')
+CFG = pathlib.Path('/home/fpp/media/plugindata/fpp-audio-preprocessed/settings.json')
+LOG = pathlib.Path('/home/fpp/media/logs/plugin-fpp-audio-preprocessed.log')
 MUSIC = pathlib.Path('/home/fpp/media/music')
 STOP = False
 
