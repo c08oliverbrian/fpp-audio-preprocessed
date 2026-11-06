@@ -140,16 +140,18 @@
     $('volvalue').textContent = `${value}%`;
   });
 
-  // Developer contributions are completely optional and never block playback.
-  // Stripe is contacted only after the visitor explicitly opens the support panel.
+  // Visitors may donate voluntarily. The developer support link is always offered.
+  // Stripe is contacted only when the visitor opens the hosted payment page.
   let supportConfig = null;
+  $('donateLink').href = 'https://donate.stripe.com/6oUbJ2dYq8ZY7QB8at3sI00';
+  $('supportCard').hidden = false;
   const defaultLink = 'https://donate.stripe.com/6oUbJ2dYq8ZY7QB8at3sI00';
   async function setupSupport() {
     try {
       const result = await fetch('/api/player-config', { cache: 'no-store' });
       if (!result.ok) return;
       const data = await result.json();
-      if (!data?.developer_support?.enabled) return;
+      if (!data?.developer_support) return;
       supportConfig = data.developer_support;
       const link = supportConfig.payment_url;
       if (!/^https:\/\/(?:donate\.|buy\.)stripe\.com\//.test(link || '')) return;

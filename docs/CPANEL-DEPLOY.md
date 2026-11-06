@@ -36,20 +36,9 @@ pip install -r requirements-cpanel.txt
 
 Restart from **cPanel → Setup Python App → Restart**. Do **not** run `backend/server.py`, install a systemd service on cPanel, or change the app root. Keep `private-media` outside public web roots.
 
-## Donation configuration
+## Developer contribution link
 
-The support panel is **enabled by default**, is optional to visitors, and never blocks playback. It clearly says contributions go to the audio player **developer**, not the light-show operator.
-
-| Environment variable | Default | Meaning |
-|---|---|---|
-| `FPP_DEVELOPER_SUPPORT_ENABLED` | `1` | Set to `0` to remove developer support card completely |
-| `FPP_DEVELOPER_SUPPORT_URL` | `https://donate.stripe.com/6oUbJ2dYq8ZY7QB8at3sI00` | HTTPS Stripe donation page |
-| `FPP_DEVELOPER_SUPPORT_BUTTON_ID` | Provided live Stripe Buy Button ID | Stripe button ID (public) |
-| `FPP_DEVELOPER_SUPPORT_PUBLISHABLE_KEY` | Provided Stripe publishable key | Stripe frontend key (public, **not** a secret key) |
-
-For the user-supplied donation setup, the QR image points to the default `FPP_DEVELOPER_SUPPORT_URL`. If you change the donation URL, the supplied QR is automatically hidden to prevent sending visitors to the wrong payment destination. The embedded Stripe button is configured independently; change both the Buy Button ID and publishable key when changing Stripe accounts.
-
-**How the listener sees it:** an optional "Enjoying the free audio player?" section appears below the player. Only on opening it does the page load `https://js.stripe.com/v3/buy-button.js`; alternatively the direct Stripe link works without JavaScript from Stripe. No payment card data is handled by the self-hosted app.
+The free player always offers a voluntary developer-support panel linking to the project developer's Stripe-hosted contribution page. No donation is required to listen; card details are handled by Stripe, not this server. There is no cPanel setting to suppress this link. Visitors decide whether to open it or donate.
 
 ## Keep these old settings
 
@@ -57,18 +46,18 @@ For the user-supplied donation setup, the QR image points to the default `FPP_DE
 
 ## Verify after the restart
 
-1. `https://YOUR-HOST/health` returns `{"ok":true,"version":"1.0.0-rc2-cpanel"}`.
+1. `https://YOUR-HOST/health` returns `{"ok":true,"version":"1.0.0-rc4-cpanel"}`.
 2. `https://YOUR-HOST/api/player-config` returns developer-support options without any FPP device authentication secrets.
 3. `https://YOUR-HOST/api/shows/fpp` returns active playback metadata when FPP is playing; expect `media_ready:true` once the MP3 has uploaded.
 4. `https://YOUR-HOST/listen/fpp/` loads the new player (including CSS/JS), and a phone on cellular data plays music when **Listen live** is tapped.
-5. Open the support panel. The Stripe Buy Button should appear, and the direct donation link should target the same Stripe page as the provided QR. Confirm separately in Stripe that the Buy Button ID is linked to your intended donation product/payment link. **Do not complete a real payment just for testing.**
+5. Open the support panel. The direct donation link should target the same Stripe page as the provided QR. Do not complete a real payment just for testing.
 
 ## Troubleshooting
 
 - **Old UI after upload:** clear cache / force refresh; the stylesheet and JavaScript have versioned asset URLs.
 - **404 on listener:** missing `~/web-player/index.html` or files in the wrong directory.
 - **404 on `donate-qr.png`:** copy `web-player/donate-qr.png` to the existing web-player folder.
-- **Stripe button not shown:** ad/tracking blockers or Stripe iframe restrictions may block it; the direct HTTPS donation link remains available. If a Content Security Policy is configured upstream, allow Stripe's script and frame hosts per their docs.
+- **Developer support link missing:** clear browser cache, ensure updated player.js is deployed, and verify `/api/player-config` is available. No Stripe JavaScript is embedded.
 - **`media_ready:false`:** inspect the stored filename. The backend decodes `%20` back to spaces; older encoded filenames may require renaming once.
 - **Pairing 403:** pairing needs HTTPS and the configured code; do not disable HTTPS checks.
 - **PUT 413 or 403:** hosting request body limit, quota, or WAF; check Passenger logs / ask the host.

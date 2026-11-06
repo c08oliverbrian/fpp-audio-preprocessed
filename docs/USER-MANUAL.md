@@ -99,9 +99,9 @@ The streaming server stores and delivers copies of the audio files. It does **no
 
 ## 7. Optional developer support
 
-The player includes a small, **optional** panel for donations to the **software developer**, not the individual light-display owner. Listening is always free. The Stripe Buy Button loads only after a visitor opens the support panel.
+The player includes a small, **always-displayed but voluntary** panel for donations to the **software developer**, not the individual light-display owner. Listening is always free. Stripe opens only when a visitor follows the voluntary contribution link.
 
-To disable the panel, set `FPP_DEVELOPER_SUPPORT_ENABLED=0` in cPanel and restart the Python app. To change the Stripe recipient, update the `FPP_DEVELOPER_SUPPORT_URL`, `FPP_DEVELOPER_SUPPORT_BUTTON_ID`, and `FPP_DEVELOPER_SUPPORT_PUBLISHABLE_KEY` values together. Never put a Stripe *secret* API key in the page or the repository.
+The developer-support card is always displayed, but no donation is required to listen. Payment processing takes place exclusively on the Stripe-hosted page.
 
 ## 8. Troubleshooting
 

@@ -43,3 +43,18 @@ Test a track with spaces in its name and verify `media_ready: true` in the backe
 ### Safety
 
 Never commit token/config files to Git. No cPanel restart is necessary if only the included player files are updated. The old cPanel backend code remains compatible.
+
+## rc4: FPP web UI settings permissions
+
+Earlier rc3 mistakenly created private `settings.json` as `fpp:fpp 0600`. FPP's PHP interface normally executes as `www-data` and could not write the file. The rc4 installer now uses `fpp:www-data 0660` and `fpp:www-data 2770` for the directory. The service still runs as `fpp`, and credentials stay out of FPP's crash-report config directory. The rc4 installer also restores the old paired settings if the new file is present but unpaired.
+
+If the script update has not yet run, the FPP SSH Shell can repair the existing directory immediately:
+
+```bash
+sudo chown fpp:www-data /home/fpp/media/plugindata/fpp-audio-preprocessed
+sudo chmod 2770 /home/fpp/media/plugindata/fpp-audio-preprocessed
+sudo chown fpp:www-data /home/fpp/media/plugindata/fpp-audio-preprocessed/settings.json
+sudo chmod 660 /home/fpp/media/plugindata/fpp-audio-preprocessed/settings.json
+```
+
+Check the `www-data` group exists before issuing these commands (`getent group www-data`). If your FPP image uses another PHP user, check the webserver process identity and adjust the group rather than using world-writable permissions.

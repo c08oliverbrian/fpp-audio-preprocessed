@@ -1,4 +1,4 @@
-"""LightShow Web Stream cPanel/Passenger backend (v1.0.0-rc2)."""
+"""LightShow Web Stream cPanel/Passenger backend (v1.0.0-rc4)."""
 import os, re, json, time, uuid, hmac, hashlib, sqlite3, io, secrets
 from pathlib import Path
 from urllib.parse import unquote
@@ -14,11 +14,9 @@ PAIR=os.environ.get('FPP_PAIR_CODE','')
 PUBLIC=os.environ.get('FPP_PUBLIC_URL','').rstrip('/')
 MAX_BYTES=int(os.environ.get('FPP_MAX_MEDIA_BYTES',str(100*1024*1024)))
 STALE=float(os.environ.get('FPP_STALE_SECONDS','12'))
-# Developer-support configuration: the visitor can opt in, and show owners may turn it off.
-SUPPORT_ENABLED=os.environ.get('FPP_DEVELOPER_SUPPORT_ENABLED','1').strip().lower() not in ('0','false','no','off')
-SUPPORT_URL=os.environ.get('FPP_DEVELOPER_SUPPORT_URL','https://donate.stripe.com/6oUbJ2dYq8ZY7QB8at3sI00').strip()
-SUPPORT_BUTTON=os.environ.get('FPP_DEVELOPER_SUPPORT_BUTTON_ID','buy_btn_1UYUWVJ4oxFRjDbmkMWeP15F')
-SUPPORT_PUBLISHABLE=os.environ.get('FPP_DEVELOPER_SUPPORT_PUBLISHABLE_KEY','pk_live_51TADx9J4oxFRjDbmT3rEILfvDN6teHJcuFrbvKPIoC9xFmVwLB2UWK9qneWauQIrTn1lmVmiMnm8edbXqCtMpPIx00SXust7vZ')
+# Developer contribution link is part of the free player; visitors decide
+# whether to open it or donate. There is no server-side hide/disable option.
+SUPPORT_URL='https://donate.stripe.com/6oUbJ2dYq8ZY7QB8at3sI00'
 ID=re.compile(r'^[a-zA-Z0-9_-]{1,64}$')
 app=Flask(__name__)
 app.config['MAX_CONTENT_LENGTH']=MAX_BYTES+4096
@@ -75,12 +73,9 @@ def health():return jsonify(ok=True,version='1.0.0-rc2-cpanel')
 @app.get('/api/player-config')
 def player_config():
     # Only public metadata; tokens, pairing code, filesystem paths and backend secrets are never served.
-    enabled=SUPPORT_ENABLED and SUPPORT_URL.startswith(('https://donate.stripe.com/','https://buy.stripe.com/'))
     return jsonify(developer_support={
-        'enabled': enabled,
-        'payment_url': SUPPORT_URL if enabled else '',
-        'buy_button_id': SUPPORT_BUTTON if enabled else '',
-        'publishable_key': SUPPORT_PUBLISHABLE if enabled else ''
+        'enabled': True,
+        'payment_url': SUPPORT_URL
     })
 
 @app.post('/api/pair')

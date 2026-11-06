@@ -14,7 +14,7 @@
 - [ ] Upload MP3s with spaces, punctuation and mixed case. Test a 3 MB track and a larger track within the host's limits.
 - [ ] Verify browser player on iPhone Safari and Android Chrome over cellular, including late join, track transition, foreground/background/resume, poor connectivity.
 - [ ] Check `/listen/DEVICE/`, JS/CSS, QR, HTTP Range responses, and no secret token in the `/api/player-config` response.
-- [ ] Check donation panel can be opened and closed; Stripe script should not load until the panel is opened. Verify direct link and supplied QR; test `FPP_DEVELOPER_SUPPORT_ENABLED=0`.
+- [ ] Check donation panel can be opened and closed; no Stripe script is loaded inside the player. Verify the developer link and supplied QR always appear; donations remain voluntary.
 - [ ] Verify upload logs, log rotation, and graceful service shutdown; review cPanel Passenger logs.
 - [ ] Check multiple visitors and peak bandwidth on the intended shared hosting plan.
 - [ ] Verify music usage rights and a suitable privacy statement for the actual operator.

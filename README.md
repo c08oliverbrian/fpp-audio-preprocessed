@@ -7,7 +7,7 @@ This repository contains **two independently deployed components**:
 - **FPP plugin** (repository root, `agent/`, `content.php`, `scripts/`) — installed via FPP 10's Plugin Manager. Runs a background agent that observes playback and uploads media to the operator's backend.
 - **Backend and public listener** (`backend/` and `web-player/`) — hosted separately using a cPanel Python 3.10+ / Passenger application. The backend serves media files, playback state, listener UI, and visitor QR codes.
 
-**Listening is always free.** A small, optional support panel allows visitors to contribute directly to the **software developer**, *not* the display owner. Stripe is loaded only after the visitor opens this panel. A show operator can disable it with `FPP_DEVELOPER_SUPPORT_ENABLED=0` on the server.
+**Listening is always free.** A small, always-present support panel allows visitors to contribute directly to the **software developer**, *not* the display owner. Stripe is contacted only if the visitor opens the hosted donation page. Donations are voluntary and never required to listen.
 
 ## Instructions manual
 
@@ -59,9 +59,9 @@ cPanel home
 
 ## Privacy and contributions
 
-The Pi sends the chosen backend the audio filename, file content, playback position, show display name, and a device identifier. Backend operators control their server and retention. Visitors' browsers access that same host and the music files. When a visitor **opens** the support panel, the player may load Stripe's embedded Buy Button; alternatively, the visitor can open the direct donation page. Payment information is entered on Stripe, not on this server. The support link benefits the **software developer**, not the homeowner or any nonprofit.
+The Pi sends the chosen backend the audio filename, file content, playback position, show display name, and a device identifier. Backend operators control their server and retention. Visitors' browsers access that same host and the music files. The player offers a link to a Stripe-hosted donation page; no Stripe script is embedded. Payment information is entered on Stripe, not on this server. The support link benefits the **software developer**, not the homeowner or any nonprofit.
 
-To remove the support panel from your own deployment, set `FPP_DEVELOPER_SUPPORT_ENABLED=0` in cPanel and restart the Python application. To use a different recipient, configure the `FPP_DEVELOPER_SUPPORT_*` variables as explained in the deployment guide. The Stripe key included here is a **publishable** key, not a payment secret; never commit an `sk_live` value.
+The developer-support link is displayed on the player; visitors choose whether to open it or contribute. It does not gate listening.
 
 ## Diagnostics
 

@@ -1,3 +1,9 @@
+## v1.0.0-rc4 (2026-11-06)
+
+- Fix FPP web configuration Save failure: shared fpp/www-data write permissions on private plugin settings, without exposing tokens in crash-report config.
+- Recover existing paired credentials from the legacy settings file when previous migration left new settings empty.
+- Keep the Stripe developer-support link visible in the visitor player; visiting or donating remains completely voluntary. Remove the server-side switch to disable it.
+
 ## v1.0.0-rc3 — FPP listing compliance
 
 - Executable install/uninstall hooks (both root and scripts paths), with Git mode instructions.

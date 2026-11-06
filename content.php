@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$error) {
             $written = @file_put_contents($path, json_encode($next, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), LOCK_EX);
             if ($written === false) {
-                $message = 'Could not save settings. Check configuration file permissions.';
+                $message = 'Could not save settings. The FPP web-server account needs write access to the plugin settings file. Update the plugin to rc4 and run its installation hook.';
                 $error = true;
             } else {
                 @chmod($path, 0600);
@@ -99,6 +99,6 @@ $device = (string)($cfg['device_id'] ?? 'fpp');
       <p><strong>QR image:</strong> <a target="_blank" rel="noopener noreferrer" href="<?=lightshowEsc($base.'/api/shows/'.rawurlencode($device).'/qr')?>">Open visitor QR code</a></p>
     <?php else: ?><p>Save your backend URL to show these links.</p><?php endif; ?>
     <p class="lsr-note">Agent log: <code>/home/fpp/media/logs/plugin-fpp-audio-preprocessed.log</code></p>
-    <p class="lsr-note">The optional developer-support panel is configured on your cPanel backend; it never restricts listening.</p>
+    <p class="lsr-note">The visitor player includes a voluntary developer contribution link; listening is always free.</p>
   </div>
 </div>

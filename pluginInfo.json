@@ -1,14 +1,14 @@
 {
   "repoName": "fpp-audio-preprocessed",
-  "name": "LightShow Web Stream — Self-Hosted Audio",
+  "name": "LightShow Web Stream \u2014 Self-Hosted Audio",
   "author": "LightShow Web Stream contributors",
-  "description": "Free, self-hosted music streaming synchronized approximately to FPP playback; optional developer contributions.",
+  "description": "Free self-hosted music streaming approximately synchronized to FPP playback, with voluntary developer contributions.",
   "homeURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed",
   "srcURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed.git",
   "bugURL": "https://github.com/c08oliverbrian/fpp-audio-preprocessed/issues",
   "allowUpdates": 1,
   "privacy": {
-    "summary": "Streams FPP show audio to your HTTPS server. The optional listener support link opens Stripe. Installs a background FPP synchronization service.",
+    "summary": "Streams show audio to your HTTPS server, installs a sync service, and offers a voluntary Stripe developer-support link.",
     "sends": [
       {
         "to": "the backend HTTPS server you configure",
@@ -39,7 +39,7 @@
       }
     ],
     "closedCode": false,
-    "other": "Optional contributions support the software developer, not the show owner. Payment links open on Stripe; no payment is needed to listen. Stream only music you are licensed to use."
+    "other": "The developer-support link is displayed in the free player; visitors are not required to contribute. Payments open on Stripe and do not benefit the show owner. Stream only music you are licensed to use."
   },
   "versions": [
     {

@@ -27,7 +27,7 @@ class ReleaseTests(unittest.TestCase):
     def test_backend_routes_exist(self):
         code = (ROOT / 'backend/cpanel_app.py').read_text()
         for expected in ('/listen/<device>/', '/api/player-config', 'route_media_name(name)',
-                         "'donate-qr.png'", 'FPP_DEVELOPER_SUPPORT_ENABLED'):
+                         "'donate-qr.png'", "'enabled': True"):
             self.assertIn(expected, code)
         # Syntax validation without requiring Flask installed on development computer.
         ast.parse(code)
@@ -67,7 +67,8 @@ class ReleaseTests(unittest.TestCase):
         block = src.split('def player_config():', 1)[1].split('@app.', 1)[0]
         self.assertNotIn("'FPP_STREAM_TOKEN'", block)
         self.assertNotIn("'FPP_PAIR_CODE'", block)
-        self.assertIn('publishable_key', block)
+        self.assertIn("'enabled': True", block)
+        self.assertNotIn('FPP_DEVELOPER_SUPPORT_ENABLED', src)
 
     def test_no_private_material_in_bundle(self):
         forbidden = ['sk_live_', '-----BEGIN PRIVATE KEY-----', 'password =', 'pk_test_']
@@ -82,6 +83,17 @@ class ReleaseTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class ConfigurationPermissionsTests(unittest.TestCase):
+    def test_php_and_agent_can_both_access_settings(self):
+        hook = (ROOT/'scripts/fpp_install.sh').read_text()
+        self.assertIn('WEB_GROUP=www-data', hook)
+        self.assertIn('chmod 660 "$CFG"', hook)
+        self.assertIn("legacy.get('token')", hook)
+
+    def test_no_server_side_support_disable(self):
+        for path in (ROOT/'backend/cpanel_app.py',ROOT/'backend/.env.example'):
+            self.assertNotIn('FPP_DEVELOPER_SUPPORT_ENABLED',path.read_text())
 
 class CatalogReviewTests(unittest.TestCase):
     def test_hooks_are_executable(self):
