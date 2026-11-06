@@ -1,0 +1,40 @@
+
+name: Fix FPP Executable Permissions
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-permissions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Fix executable permissions
+        run: |
+          git update-index --chmod=+x fpp_install.sh
+          git update-index --chmod=+x fpp_uninstall.sh
+          git update-index --chmod=+x scripts/fpp_install.sh
+          git update-index --chmod=+x scripts/fpp_uninstall.sh
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git diff --cached --summary
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Fix executable permissions for FPP scripts"
+            git push origin HEAD:main
+          fi
+
+      - name: Verify permissions
+        run: |
+          git ls-files -s fpp_install.sh fpp_uninstall.sh \
+            scripts/fpp_install.sh scripts/fpp_uninstall.sh
