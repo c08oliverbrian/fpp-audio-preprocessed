@@ -46,7 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message = 'Could not save settings. The FPP web-server account needs write access to the plugin settings file. Update the plugin to rc4 and run its installation hook.';
                 $error = true;
             } else {
-                @chmod($path, 0600);
+                // Preserve installer-managed 0660 mode so the FPP web server can save again.
+                // Never chmod this file to 0600: the PHP process may not own it.
                 $cfg = $next;
                 if (!$message) $message = 'Settings saved.';
             }

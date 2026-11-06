@@ -1,3 +1,9 @@
+## v1.0.0-rc5 — settings save permission regression
+
+- Fixed the FPP PHP settings form revoking its own group-write permission after a successful save.
+- Retained rc4 service installation permission repair (fpp:www-data, 0660).
+- Added repeat-save regression checks. No cPanel backend changes required.
+
 ## v1.0.0-rc4 (2026-11-06)
 
 - Fix FPP web configuration Save failure: shared fpp/www-data write permissions on private plugin settings, without exposing tokens in crash-report config.

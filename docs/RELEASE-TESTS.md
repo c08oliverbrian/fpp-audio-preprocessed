@@ -28,3 +28,7 @@
 - [ ] Submit to the FPP `fpp-data` repository following its `PLUGINS.md` process and await maintainer review.
 
 The plugin is not listed or approved merely by publishing to GitHub. The supplied ZIP is an **RC**, not a claim of FPP certification or commercial readiness.
+
+### rc5 regression
+
+Verify Settings can be saved twice in succession in FPP, then confirm the file remains mode 0660 owned by fpp:www-data and the agent still reaches the backend.

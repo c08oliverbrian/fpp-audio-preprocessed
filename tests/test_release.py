@@ -119,3 +119,18 @@ class CatalogReviewTests(unittest.TestCase):
         self.assertIn('buy.stripe.com',recipients)
         self.assertTrue(any(s['kind']=='service' and 'fpp-audio-preprocessed' in s['what'] for s in m['privacy']['systemChanges']))
         self.assertNotIn('js.stripe.com', (ROOT/'web-player/player.js').read_text())
+
+
+class RepeatSaveRegressionTests(unittest.TestCase):
+    def test_php_does_not_revoke_web_server_access_after_save(self):
+        php = (ROOT / 'content.php').read_text()
+        self.assertIn('file_put_contents($path', php)
+        self.assertNotIn('@chmod($path, 0600)', php)
+        self.assertNotIn('chmod($path, 0600)', php)
+        self.assertIn('installer-managed 0660 mode', php)
+
+    def test_install_hook_repairs_existing_permissions(self):
+        hook = (ROOT / 'scripts/fpp_install.sh').read_text()
+        self.assertIn('chown fpp:"$WEB_GROUP" "$CFG"', hook)
+        self.assertIn('chmod 660 "$CFG"', hook)
+        self.assertIn('install -d -o fpp -g "$WEB_GROUP" -m 2770 "$DATA_DIR"', hook)
