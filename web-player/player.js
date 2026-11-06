@@ -1,5 +1,5 @@
 'use strict';
-// LightShow Web Stream v1.0.0-rc2 — browser-side approximate synchronization.
+// LightShow Web Stream — browser-side approximate synchronization; hosted Stripe support link (no external scripts).
 (() => {
   const device = decodeURIComponent(location.pathname.split('/')[2] || '');
   const $ = id => document.getElementById(id);
@@ -142,7 +142,6 @@
 
   // Visitors may donate voluntarily. The developer support link is always offered.
   // Stripe is contacted only when the visitor opens the hosted payment page.
-  let supportConfig = null;
   $('donateLink').href = 'https://donate.stripe.com/6oUbJ2dYq8ZY7QB8at3sI00';
   $('supportCard').hidden = false;
   const defaultLink = 'https://donate.stripe.com/6oUbJ2dYq8ZY7QB8at3sI00';
@@ -152,8 +151,7 @@
       if (!result.ok) return;
       const data = await result.json();
       if (!data?.developer_support) return;
-      supportConfig = data.developer_support;
-      const link = supportConfig.payment_url;
+      const link = data.developer_support.payment_url;
       if (!/^https:\/\/(?:donate\.|buy\.)stripe\.com\//.test(link || '')) return;
       $('donateLink').href = link;
       $('donateQrWrap').hidden = link !== defaultLink;
